@@ -11,6 +11,7 @@ public class Password {
         boolean passwordQualityVowels = false;
         boolean passwordQualityTwoLettersInARow = false;
         boolean passwordQualityContainsVowel = false;
+        boolean isPasswordAcceptable = false;
         InputStream passwords = Password.class.getResourceAsStream("passwords.txt");
         Scanner scan = new Scanner(passwords);
         int numberOfPasswords = scan.nextInt();
@@ -27,31 +28,72 @@ public class Password {
 
 
             if (passwordString.contains("a") || passwordString.contains("e") || passwordString.contains("i") || passwordString.contains("o") || passwordString.contains("u")){
-                passwordQualityConsenates = true;
+                passwordQualityContainsVowel = true;
             } else {
-                passwordQualityConsenates = false;
+                passwordQualityContainsVowel = false;
+            }
+
+            String consonants = ".*[bcdfghjklmnpqrstvwxyz].*";
+            String vowels = ".*[aeiou].*";
+
+
+            for (int passwordIndex = 0; passwordIndex < passwordString.length() - 1; passwordIndex++) {
+                String checkOne = passwordString.substring(passwordIndex, passwordIndex + 1);
+                String checkTwo = passwordString.substring(passwordIndex + 1, passwordIndex + 2);
+                if (checkOne.equals(checkTwo)) {
+                    passwordQualityTwoLettersInARow = true;
+                    break;
+                } else {
+                    passwordQualityTwoLettersInARow = false;
+                }
+            }
+            for (int passwordIndex = 0; passwordIndex < passwordString.length() - 2; passwordIndex++) {
+                String checkOne = passwordString.substring(passwordIndex, passwordIndex + 1);
+                String checkTwo = passwordString.substring(passwordIndex + 1, passwordIndex + 2);
+                String checkThree = passwordString.substring(passwordIndex + 2, passwordIndex + 3);
+                if (checkOne.equals(checkTwo) && checkOne.equals(checkThree)) {
+                    if (checkOne.matches(vowels)) {
+                        passwordQualityVowels = true;
+                        break;
+                    } else {
+                        passwordQualityVowels = false;
+                    }
+                } else {
+                    passwordQualityVowels = false;
+                }
             }
 
 
-            if (passwordString.length() >= 8) {
-                passwordQualityLength = true;
+            for (int passwordIndex = 0; passwordIndex < passwordString.length() - 2; passwordIndex++) {
+                String checkOne = passwordString.substring(passwordIndex, passwordIndex + 1);
+                String checkTwo = passwordString.substring(passwordIndex + 1, passwordIndex + 2);
+                String checkThree = passwordString.substring(passwordIndex + 2, passwordIndex + 3);
+                if (checkOne.equals(checkTwo) && checkOne.equals(checkThree)) {
+                    if (checkOne.matches(consonants)) {
+                        passwordQualityConsenates = true;
+                        break;
+                    } else {
+                        passwordQualityConsenates = false;
+                    }
+                } else {
+                    passwordQualityConsenates = false;
+                }
+            }
+            if (passwordQualityConsenates == false && passwordQualityVowels == false && passwordQualityTwoLettersInARow == false && passwordQualityContainsVowel == true && passwordQualityLength == true) {
+                isPasswordAcceptable = true;
             } else {
-                passwordQualityConsenates = false;
+                isPasswordAcceptable = false;
             }
 
-
-            if (passwordString.length() == 8) {
-                passwordQualityLength = true;
-            } else {
-                passwordQualityConsenates = false;
-            }
             System.out.print(
-                    MessageFormat.format("The results of the password tested from file \"passwords.txt\" are: \n{0}\n{1}\n{2}\n{3}\n{4}",
-                            " - 3 consenates in a row? " + passwordQualityConsenates, //0
-                            " - 3 vowels in a row? " + passwordQualityVowels, //1
-                            " - Contains a vowel? " + passwordQualityContainsVowel, //2
-                            " - 8 Characters Long? " + passwordQualityLength, //3
-                            " - 3 consenates in a row? " + passwordQualityTwoLettersInARow + "\n\n")); //4
+                    MessageFormat.format("The results of the password tested from file \"passwords.txt\" for password \"{0}\"  are: \n{1}\n{2}\n{3}\n{4}\n{5}\n\n{6}",
+                            passwordString,
+                            " - 3 consenates in a row? " + passwordQualityConsenates, //1
+                            " - 3 vowels in a row? " + passwordQualityVowels, //2
+                            " - Contains a vowel? " + passwordQualityContainsVowel, //3
+                            " - 8 Characters Long? " + passwordQualityLength, //4
+                            " - 2 letters in a row? " + passwordQualityTwoLettersInARow, //5
+                            "Is the Password Acceptable? "  + isPasswordAcceptable + "\n\n")); //6
             try
             {
                 Thread.sleep(1000);
