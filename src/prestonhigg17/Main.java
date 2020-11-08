@@ -17,18 +17,19 @@ public class Main {
             if (scannerVar.equals("password")) {
                 Password.password();
             } else if (scannerVar.equals("3n")) {
-                ThreeNPlusOne.threeNPlusOne();
+                ThreeNPlusOne.run();
             } else {
                 System.out.print("Terminating process...\n ");
             }
             try
             {
-                Thread.sleep(6500);
+                Thread.sleep(2500);
             }
             catch(InterruptedException ex)
             {
                 Thread.currentThread().interrupt();
             }
+            pressEnterToContinue();
             int typeSpaceClear = 0;
             while (typeSpaceClear < 80) {
                 System.out.print("\n");
@@ -36,5 +37,15 @@ public class Main {
             }
 
         }
+    }
+    private static void pressEnterToContinue()
+    {
+        System.out.println("\nPress Enter key to continue...");
+        try
+        {
+            System.in.read();
+        }
+        catch(Exception e)
+        {}
     }
 }

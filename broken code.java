@@ -8,3 +8,9 @@ for (String letters : lettersArray) {
         passwordQualityTwoLettersInARow = false;
     }
 }
+
+
+
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Please enter an integer: ");
+        int n = scan.nextInt();
