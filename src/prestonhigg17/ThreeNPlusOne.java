@@ -1,6 +1,8 @@
 package prestonhigg17;
 
-import com.sun.org.apache.bcel.internal.generic.GOTO;
+
+
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.Scanner;
 
@@ -40,6 +42,32 @@ public class ThreeNPlusOne {
         System.out.println("Please enter the maximum value of the data series to be checked:");
         int j = scan.nextInt();
         int maxCycles = calc(i,j);
+        //String test = threeNPlusOneString(i); testing for correct formulas and calculation
         System.out.println("Max Cycles for data series " + i + " - " + j + " is " + maxCycles);
+        //System.out.println(test); testing for correct formulas and calculation
     }
+
+
+//    private static String threeNPlusOneString (int n) {
+//        int count = 1;
+//        String number = "";
+//        while (n != 1)
+//        {
+//            count++;
+//            if (n == 1) {
+//                break;
+//            } else if (n % 2 == 1) {
+//                n = 3 * n + 1;
+//                number += " " + n;
+//            } else {
+//                n = n / 2;
+//                number += " " + n;
+//            }
+//
+//        }
+//        return number;
+//    }
+
+
 }
+
